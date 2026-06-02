@@ -82,11 +82,21 @@ public class BurgerTest extends BaseBurgerTest {
     public void getReceiptContainsBunName() {
         burger.addIngredient(ingredientStub);
         String receipt = burger.getReceipt();
-
-        assertTrue(receipt.contains("(==== Test Bun ===="));
+        String expectedReceipt = String.format(
+                "(==== %s ====)%n" +
+                        "= %s %s =%n" +
+                        "(==== %s ====)%n" +
+                        "%nPrice: %f%n",
+                burger.bun.getName(),
+                ingredientStub.getType().toString().toLowerCase(),
+                ingredientStub.getName(),
+                burger.bun.getName(),
+                burger.getPrice()
+        );
+         assertEquals(expectedReceipt, receipt);
     }
 
-    @Test
+      @Test
     public void getReceipt_containsIngredientInLowercase() {
         burger.addIngredient(ingredientStub);
         String receipt = burger.getReceipt();

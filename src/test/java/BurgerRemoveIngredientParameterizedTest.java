@@ -1,9 +1,12 @@
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import praktikum.Ingredient;
 import praktikum.IngredientType;
 
@@ -19,6 +22,17 @@ public class BurgerRemoveIngredientParameterizedTest extends BaseBurgerTest {
 
     private final int indexToRemove;
     private final String expectedRemainingName;
+    @Mock
+    private Ingredient firstIngredient;
+    @Mock
+    private Ingredient secondIngredient;
+    private AutoCloseable mocks;
+    @Before
+    public void initMocks() {
+        mocks = MockitoAnnotations.openMocks(this);
+        when(firstIngredient.getName()).thenReturn("First");
+        when(secondIngredient.getName()).thenReturn("Second");
+    }
 
 
     public BurgerRemoveIngredientParameterizedTest(int indexToRemove, String expectedRemainingName) {
@@ -36,15 +50,17 @@ public class BurgerRemoveIngredientParameterizedTest extends BaseBurgerTest {
 
     @Test
     public void testRemoveIngredient_parametrized() {
-        Ingredient ing1 = new Ingredient(IngredientType.FILLING, "First", 100);
-        Ingredient ing2 = new Ingredient(IngredientType.FILLING, "Second", 50);
-
-        burger.addIngredient(ing1);
-        burger.addIngredient(ing2);
+        burger.addIngredient(firstIngredient);
+        burger.addIngredient(secondIngredient);
 
         burger.removeIngredient(indexToRemove);
 
         assertEquals(expectedRemainingName, burger.ingredients.get(0).getName());
     }
 
+    @After
+    public void tearDown() throws Exception {
+        mocks.close();
+    }
 }
+
