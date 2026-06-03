@@ -24,14 +24,14 @@ public class BurgerTest extends BaseBurgerTest {
 
     @Test
     public void getPriceAddsIngredientPrices() {
-        Ingredient ing1 = Mockito.mock(Ingredient.class);
-        Ingredient ing2 = Mockito.mock(Ingredient.class);
+        Ingredient ingFirst = Mockito.mock(Ingredient.class);
+        Ingredient ingSecond = Mockito.mock(Ingredient.class);
 
-        when(ing1.getPrice()).thenReturn(50f);
-        when(ing2.getPrice()).thenReturn(30f);
+        when(ingFirst.getPrice()).thenReturn(50f);
+        when(ingSecond.getPrice()).thenReturn(30f);
 
-        burger.addIngredient(ing1);
-        burger.addIngredient(ing2);
+        burger.addIngredient(ingFirst);
+        burger.addIngredient(ingSecond);
 
         float price = burger.getPrice();
         assertEquals(280.0f, price, 0.001f);
@@ -58,11 +58,11 @@ public class BurgerTest extends BaseBurgerTest {
 
     @Test
     public void moveIngredientChangesOrder() {
-        Ingredient ing1 = new Ingredient(IngredientType.FILLING, "First", 10);
-        Ingredient ing2 = new Ingredient(IngredientType.FILLING, "Second", 20);
+        Ingredient ingFirst = new Ingredient(IngredientType.FILLING, "First", 10);
+        Ingredient ingSecond = new Ingredient(IngredientType.FILLING, "Second", 20);
 
-        burger.addIngredient(ing1);
-        burger.addIngredient(ing2);
+        burger.addIngredient(ingFirst);
+        burger.addIngredient(ingSecond);
 
         burger.moveIngredient(0, 1);
 
